@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Market | Webshop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="Tygo.js" defer></script>
+</head>
+<body>
+        <header class="header">
+            <a class="logo" href="#begin">White Market</a>
+            <form id="search-form">
+                <label class="sr-only" for="search">Zoek een product</label>
+                <input id="search" type="search" placeholder="Zoek een product...">
+                <button type="submit">Zoeken</button>
+            </form>
+            <p class="cart">Winkelwagen: <span id="cart-count">0</span></p>
+        </header>
+        <main id="begin">
+            <section class="intro">
+                <p>Welkom bij White Market</p>
+                <h1>Handige producten. <span>Fijne prijzen.</span></h1>
+                <a href="#producten">Bekijk de aanbiedingen ↓</a>
+            </section>
+            <section class="shop" id="producten">
+                <h2>Populaire producten</h2>
+                <div class="product-list">
+                    <article class="product deal-product">
+                        <span class="deal-label">Aanbieding</span>
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80" alt="Draadloze koptelefoon" loading="lazy">
+                        <p class="category">Elektronica</p><h3>Koptelefoon</h3>
+                        <p class="price">€ 49,95 <del>€ 59,95</del></p>
+                        <button class="add-button" type="button">In winkelwagen</button>
+                    </article>
+                    <article class="product">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="Horloge met donkere wijzerplaat" loading="lazy">
+                        <p class="category">Accessoires</p><h3>Horloge</h3>
+                        <p class="price">€ 69,95</p>
+                        <button class="add-button" type="button">In winkelwagen</button>
+                    </article>
+                    <article class="product">
+                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Rode sneaker" loading="lazy">
+                        <p class="category">Kleding</p><h3>Sneakers</h3>
+                        <p class="price">€ 84,95</p>
+                        <button class="add-button" type="button">In winkelwagen</button>
+                    </article>
+                    <article class="product">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Digitale camera" loading="lazy">
+                        <p class="category">Elektronica</p><h3>Camera</h3>
+                        <p class="price">€ 119,95</p>
+                        <button class="add-button" type="button">In winkelwagen</button>
+                    </article>
+                </div>
+                <p id="no-results" hidden>Geen producten gevonden.</p>
+                <p id="message" aria-live="polite"></p>
+            </section>
+        </main>
+        <footer>White Market · Slim winkelen voor fijne prijzen</footer>
+    
+
+
+</body>
+</html>
