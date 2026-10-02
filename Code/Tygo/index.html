@@ -5,90 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>White Market | Webshop</title>
     <link rel="stylesheet" href="style.css">
-    <script src="Tygo.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-        <header class="header">
-            <a class="logo" href="#begin">White Market</a>
-            <form id="search-form">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="logo" href="#top">White Market</a>
+
+            <form id="search-form" class="search-form" role="search">
                 <label class="sr-only" for="search">Zoek een product</label>
-                <input id="search" type="search" placeholder="Zoek een product...">
+                <input id="search" type="search" placeholder="Zoek een product..." aria-label="Zoek een product">
                 <button type="submit">Zoeken</button>
             </form>
-            <p class="cart">Winkelwagen: <span id="cart-count">0</span></p>
-        </header>
-        <main id="begin">
-            <section class="intro">
+
+            <p class="cart">Winkelwagen: <span id="cart-count" aria-live="polite">0</span></p>
+        </div>
+    </header>
+
+    <main id="top">
+        <section class="hero">
+            <div class="container">
                 <p>Welkom bij White Market</p>
                 <h1>Handige producten. <span>Fijne prijzen.</span></h1>
                 <a href="#producten">Bekijk de aanbiedingen ↓</a>
-            </section>
-            <section class="shop" id="producten">
-                <h2>Aanbiedingen</h2>
-                <div class="product-list">
-                    <article class="product deal-product">
-                        <span class="deal-label">Bestel nu!</span>
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80" alt="Draadloze koptelefoon" loading="lazy">
-                        <p class="category">Elektronica</p><h3>Koptelefoon</h3>
-                        <p class="price">€ 49,95 <del>€ 59,95</del></p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product deal-product">
-                        <span class="deal-label">Bestel nu!</span>
-                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="Horloge met donkere wijzerplaat" loading="lazy">
-                        <p class="category">Accessoires</p><h3>Horloge</h3>
-                        <p class="price">€ 59,95 <del>€ 69,95</del></p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product deal-product">
-                        <span class="deal-label">Bestel nu!</span>
-                        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Rode sneaker" loading="lazy">
-                        <p class="category">Kleding</p><h3>Sneakers</h3>
-                        <p class="price">€ 69,95 <del>€ 84,95</del></p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product deal-product">
-                        <span class="deal-label">Bestel nu!</span>
-                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Digitale camera" loading="lazy">
-                        <p class="category">Elektronica</p><h3>Camera</h3>
-                        <p class="price">€ 99,95 <del>€ 119,95</del></p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                </div>
-                <h2>Meer producten</h2>
-                <div class="product-list">
-                    <article class="product">
-                        <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80" alt="Draadloze speaker" loading="lazy">
-                        <p class="category">Elektronica</p><h3>Speaker</h3>
-                        <p class="price">€ 44,95</p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product">
-                        <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80" alt="Tafellamp" loading="lazy">
-                        <p class="category">Wonen</p><h3>Tafellamp</h3>
-                        <p class="price">€ 34,95</p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80" alt="Rugzak" loading="lazy">
-                        <p class="category">Accessoires</p><h3>Rugzak</h3>
-                        <p class="price">€ 39,95</p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                    <article class="product">
-                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80" alt="Koffie en koffiebonen" loading="lazy">
-                        <p class="category">Keuken</p><h3>Koffiezetapparaat</h3>
-                        <p class="price">€ 79,95</p>
-                        <button class="add-button" type="button">In winkelwagen</button>
-                    </article>
-                </div>
-                <p id="no-results" hidden>Geen producten gevonden.</p>
-                <p id="message" aria-live="polite"></p>
-            </section>
-        </main>
-        <footer>White Market · Slim winkelen voor fijne prijzen</footer>
-    
+            </div>
+        </section>
 
+        <section class="shop container" id="producten">
+            <h2>Aanbiedingen</h2>
+            <div class="product-list">
+                <article class="product deal-product" data-product-name="Koptelefoon">
+                    <span class="deal-label">Bestel nu!</span>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80" alt="Draadloze koptelefoon" loading="lazy">
+                    <p class="category">Elektronica</p>
+                    <h3>Koptelefoon</h3>
+                    <p class="price">€ 49,95 <del>€ 59,95</del></p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
 
+                <article class="product deal-product" data-product-name="Horloge">
+                    <span class="deal-label">Bestel nu!</span>
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="Horloge met donkere wijzerplaat" loading="lazy">
+                    <p class="category">Accessoires</p>
+                    <h3>Horloge</h3>
+                    <p class="price">€ 59,95 <del>€ 69,95</del></p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+
+                <article class="product deal-product" data-product-name="Sneakers">
+                    <span class="deal-label">Bestel nu!</span>
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Rode sneaker" loading="lazy">
+                    <p class="category">Kleding</p>
+                    <h3>Sneakers</h3>
+                    <p class="price">€ 69,95 <del>€ 84,95</del></p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+
+                <article class="product deal-product" data-product-name="Camera">
+                    <span class="deal-label">Bestel nu!</span>
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Digitale camera" loading="lazy">
+                    <p class="category">Elektronica</p>
+                    <h3>Camera</h3>
+                    <p class="price">€ 99,95 <del>€ 119,95</del></p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+            </div>
+
+            <h2>Meer producten</h2>
+            <div class="product-list">
+                <article class="product" data-product-name="Speaker">
+                    <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80" alt="Draadloze speaker" loading="lazy">
+                    <p class="category">Elektronica</p>
+                    <h3>Speaker</h3>
+                    <p class="price">€ 44,95</p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+
+                <article class="product" data-product-name="Tafellamp">
+                    <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80" alt="Tafellamp" loading="lazy">
+                    <p class="category">Wonen</p>
+                    <h3>Tafellamp</h3>
+                    <p class="price">€ 34,95</p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+
+                <article class="product" data-product-name="Rugzak">
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80" alt="Rugzak" loading="lazy">
+                    <p class="category">Accessoires</p>
+                    <h3>Rugzak</h3>
+                    <p class="price">€ 39,95</p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+
+                <article class="product" data-product-name="Koffiezetapparaat">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80" alt="Koffie en koffiebonen" loading="lazy">
+                    <p class="category">Keuken</p>
+                    <h3>Koffiezetapparaat</h3>
+                    <p class="price">€ 79,95</p>
+                    <button class="add-button" type="button">In winkelwagen</button>
+                </article>
+            </div>
+
+            <p id="no-results" hidden>Geen producten gevonden.</p>
+            <p id="message" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <footer>White Market · Slim winkelen voor fijne prijzen</footer>
 </body>
 </html>
