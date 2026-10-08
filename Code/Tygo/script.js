@@ -12,7 +12,10 @@ function searchProducts() {
     let foundProduct = false;
 
     productCards.forEach((product) => {
-        const matches = product.textContent.toLowerCase().includes(searchText);
+        const productName = product.dataset.productName || product.querySelector("h3")?.textContent || "";
+        const category = product.querySelector(".category")?.textContent || "";
+        const searchableText = `${productName} ${category}`.toLowerCase();
+        const matches = searchableText.includes(searchText);
         product.hidden = !matches;
 
         if (matches) {

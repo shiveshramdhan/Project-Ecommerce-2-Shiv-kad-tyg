@@ -149,6 +149,10 @@ img {
     border-radius: 12px;
 }
 
+.product[hidden] {
+    display: none;
+}
+
 .deal-label {
     display: inline-block;
     align-self: flex-start;
