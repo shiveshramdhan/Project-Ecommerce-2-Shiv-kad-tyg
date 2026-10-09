@@ -32,6 +32,15 @@
         </section>
 
         <section class="shop container" id="producten">
+            <aside class="flash-sale" id="flash-sale" aria-labelledby="flash-sale-title">
+                <div>
+                    <p class="flash-sale-label">Tijdelijke aanbieding</p>
+                    <h2 id="flash-sale-title">Flash sale eindigt over</h2>
+                    <p class="countdown-status" id="countdown-status">Mis deze aanbiedingen niet!</p>
+                </div>
+                <p class="countdown" id="countdown" role="timer" aria-label="Resterende tijd van de flash sale">24:00:00</p>
+            </aside>
+
             <h2>Aanbiedingen</h2>
             <div class="product-list">
                 <article class="product deal-product" data-product-name="Koptelefoon">
@@ -106,7 +115,7 @@
                 </article>
             </div>
 
-            <p id="no-results" hidden>Geen producten gevonden.</p>
+            <p id="no-results" role="status" aria-live="polite" hidden>Geen producten gevonden.</p>
             <p id="message" role="status" aria-live="polite"></p>
         </section>
     </main>

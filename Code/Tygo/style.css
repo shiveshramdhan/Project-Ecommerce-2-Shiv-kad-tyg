@@ -133,6 +133,60 @@ img {
     font-size: clamp(1.6rem, 2.5vw, 2rem);
 }
 
+.flash-sale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding: 22px 28px;
+    background: var(--primary);
+    border-radius: 12px;
+    color: #ffffff;
+    transition: background-color 180ms ease;
+}
+
+.flash-sale-label {
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.flash-sale h2 {
+    margin: 0 0 6px;
+}
+
+.countdown-status {
+    margin: 0;
+}
+
+.countdown {
+    margin: 0;
+    padding: 10px 16px;
+    background: var(--accent);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.flash-sale.is-expired {
+    background: #555b55;
+}
+
+.flash-sale.is-expired .flash-sale-label {
+    color: #ffffff;
+}
+
+.flash-sale.is-expired .countdown {
+    background: #e5e7df;
+}
+
 .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -147,6 +201,10 @@ img {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
+}
+
+.product[hidden] {
+    display: none;
 }
 
 .deal-label {
@@ -258,6 +316,13 @@ footer {
 }
 
 @media (max-width: 750px) {
+    .flash-sale {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+    }
+
     .header-inner {
         flex-wrap: wrap;
         justify-content: center;
