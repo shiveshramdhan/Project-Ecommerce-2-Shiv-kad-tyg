@@ -1,6 +1,6 @@
 const searchInput = document.querySelector("#search");
-const productCards = [...document.querySelectorAll(".product")];
 const searchForm = document.querySelector("#search-form");
+const categoryFilter = document.querySelector("#category-filter");
 const noResults = document.querySelector("#no-results");
 const cartCount = document.querySelector("#cart-count");
 const message = document.querySelector("#message");
@@ -61,15 +61,45 @@ function updateCountdown() {
 const countdownInterval = window.setInterval(updateCountdown, 1000);
 updateCountdown();
 
-function searchProducts() {
+function getProductCards() {
+    return [...document.querySelectorAll(".product")];
+}
+
+function getProductCategory(product) {
+    return product.dataset.category || product.querySelector(".category")?.textContent.trim() || "";
+}
+
+function updateCategoryOptions(productCards) {
+    const selectedCategory = categoryFilter.value;
+    const categories = [...new Set(productCards
+        .map(getProductCategory)
+        .filter(Boolean))]
+        .sort((first, second) => first.localeCompare(second));
+
+    categoryFilter.replaceChildren(new Option("Alle categorieën", ""));
+
+    categories.forEach((category) => {
+        categoryFilter.add(new Option(category, category));
+    });
+
+    categoryFilter.value = categories.includes(selectedCategory) ? selectedCategory : "";
+}
+
+function filterProducts() {
+    const productCards = getProductCards();
+    updateCategoryOptions(productCards);
+
     const searchText = searchInput.value.trim().toLowerCase();
+    const selectedCategory = categoryFilter.value.toLowerCase();
     let foundProduct = false;
 
     productCards.forEach((product) => {
         const productName = product.dataset.productName || product.querySelector("h3")?.textContent || "";
-        const category = product.querySelector(".category")?.textContent || "";
+        const category = getProductCategory(product);
         const searchableText = `${productName} ${category}`.toLowerCase();
-        const matches = searchableText.includes(searchText);
+        const matchesSearch = searchableText.includes(searchText);
+        const matchesCategory = !selectedCategory || category.toLowerCase() === selectedCategory;
+        const matches = matchesSearch && matchesCategory;
         product.hidden = !matches;
 
         if (matches) {
@@ -82,18 +112,23 @@ function searchProducts() {
 
 searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    searchProducts();
+    filterProducts();
 });
 
-searchInput.addEventListener("input", searchProducts);
+searchInput.addEventListener("input", filterProducts);
+categoryFilter.addEventListener("change", filterProducts);
+filterProducts();
 
-document.querySelectorAll(".add-button").forEach((button) => {
-    button.addEventListener("click", () => {
-        const product = button.closest(".product");
-        const productName = product?.dataset.productName || product?.querySelector("h3")?.textContent || "Product";
+document.addEventListener("click", (event) => {
+    const button = event.target.closest(".add-button");
+    if (!button) {
+        return;
+    }
 
-        cartItems += 1;
-        cartCount.textContent = cartItems;
-        message.textContent = `${productName} toegevoegd aan je winkelwagen.`;
-    });
+    const product = button.closest(".product");
+    const productName = product?.dataset.productName || product?.querySelector("h3")?.textContent || "Product";
+
+    cartItems += 1;
+    cartCount.textContent = cartItems;
+    message.textContent = `${productName} toegevoegd aan je winkelwagen.`;
 });

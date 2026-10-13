@@ -41,9 +41,16 @@
                 <p class="countdown" id="countdown" role="timer" aria-label="Resterende tijd van de flash sale">24:00:00</p>
             </aside>
 
+            <div class="product-filters">
+                <label for="category-filter">Filter op categorie</label>
+                <select id="category-filter">
+                    <option value="">Alle categorieën</option>
+                </select>
+            </div>
+
             <h2>Aanbiedingen</h2>
             <div class="product-list">
-                <article class="product deal-product" data-product-name="Koptelefoon">
+                <article class="product deal-product" data-product-name="Koptelefoon" data-category="Elektronica">
                     <span class="deal-label">Bestel nu!</span>
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80" alt="Draadloze koptelefoon" loading="lazy">
                     <p class="category">Elektronica</p>
@@ -52,7 +59,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product deal-product" data-product-name="Horloge">
+                <article class="product deal-product" data-product-name="Horloge" data-category="Accessoires">
                     <span class="deal-label">Bestel nu!</span>
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" alt="Horloge met donkere wijzerplaat" loading="lazy">
                     <p class="category">Accessoires</p>
@@ -61,7 +68,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product deal-product" data-product-name="Sneakers">
+                <article class="product deal-product" data-product-name="Sneakers" data-category="Kleding">
                     <span class="deal-label">Bestel nu!</span>
                     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Rode sneaker" loading="lazy">
                     <p class="category">Kleding</p>
@@ -70,7 +77,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product deal-product" data-product-name="Camera">
+                <article class="product deal-product" data-product-name="Camera" data-category="Elektronica">
                     <span class="deal-label">Bestel nu!</span>
                     <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80" alt="Digitale camera" loading="lazy">
                     <p class="category">Elektronica</p>
@@ -82,7 +89,7 @@
 
             <h2>Meer producten</h2>
             <div class="product-list">
-                <article class="product" data-product-name="Speaker">
+                <article class="product" data-product-name="Speaker" data-category="Elektronica">
                     <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80" alt="Draadloze speaker" loading="lazy">
                     <p class="category">Elektronica</p>
                     <h3>Speaker</h3>
@@ -90,7 +97,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product" data-product-name="Tafellamp">
+                <article class="product" data-product-name="Tafellamp" data-category="Wonen">
                     <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80" alt="Tafellamp" loading="lazy">
                     <p class="category">Wonen</p>
                     <h3>Tafellamp</h3>
@@ -98,7 +105,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product" data-product-name="Rugzak">
+                <article class="product" data-product-name="Rugzak" data-category="Accessoires">
                     <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80" alt="Rugzak" loading="lazy">
                     <p class="category">Accessoires</p>
                     <h3>Rugzak</h3>
@@ -106,7 +113,7 @@
                     <button class="add-button" type="button">In winkelwagen</button>
                 </article>
 
-                <article class="product" data-product-name="Koffiezetapparaat">
+                <article class="product" data-product-name="Koffiezetapparaat" data-category="Keuken">
                     <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80" alt="Koffie en koffiebonen" loading="lazy">
                     <p class="category">Keuken</p>
                     <h3>Koffiezetapparaat</h3>
