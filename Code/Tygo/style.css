@@ -291,6 +291,32 @@ img {
     font-weight: 400;
 }
 
+.stock-status {
+    margin: 0 0 14px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.stock-status.is-low-stock,
+.stock-status.is-critical-stock,
+.stock-status.is-out-of-stock {
+    align-self: flex-start;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.stock-status.is-low-stock {
+    background: #fff1cc;
+    color: #765000;
+}
+
+.stock-status.is-critical-stock,
+.stock-status.is-out-of-stock {
+    background: #fde2df;
+    color: #8c241b;
+}
+
 .add-button {
     width: 100%;
     margin-top: auto;
@@ -305,6 +331,14 @@ img {
     transition: background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
+.add-button:disabled {
+    background: #e5e7df;
+    color: #777777;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
 .add-button:hover,
 .add-button:focus-visible {
     background: var(--primary);
@@ -315,6 +349,14 @@ img {
 
 .add-button:active {
     transform: translateY(0);
+}
+
+.add-button:disabled:hover,
+.add-button:disabled:focus-visible {
+    background: #e5e7df;
+    color: #777777;
+    box-shadow: none;
+    transform: none;
 }
 
 .add-button:focus-visible,

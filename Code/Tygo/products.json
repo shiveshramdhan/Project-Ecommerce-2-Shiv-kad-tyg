@@ -1,0 +1,78 @@
+[
+    {
+        "name": "Koptelefoon",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80",
+        "alt": "Draadloze koptelefoon",
+        "category": "Elektronica",
+        "price": "€ 49,95",
+        "originalPrice": "€ 59,95",
+        "stock": 2,
+        "deal": true
+    },
+    {
+        "name": "Horloge",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
+        "alt": "Horloge met donkere wijzerplaat",
+        "category": "Accessoires",
+        "price": "€ 59,95",
+        "originalPrice": "€ 69,95",
+        "stock": 4,
+        "deal": true
+    },
+    {
+        "name": "Sneakers",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+        "alt": "Rode sneaker",
+        "category": "Kleding",
+        "price": "€ 69,95",
+        "originalPrice": "€ 84,95",
+        "stock": 8,
+        "deal": true
+    },
+    {
+        "name": "Camera",
+        "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
+        "alt": "Digitale camera",
+        "category": "Elektronica",
+        "price": "€ 99,95",
+        "originalPrice": "€ 119,95",
+        "stock": 1,
+        "deal": true
+    },
+    {
+        "name": "Speaker",
+        "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=700&q=80",
+        "alt": "Draadloze speaker",
+        "category": "Elektronica",
+        "price": "€ 44,95",
+        "stock": 24,
+        "deal": false
+    },
+    {
+        "name": "Tafellamp",
+        "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80",
+        "alt": "Tafellamp",
+        "category": "Wonen",
+        "price": "€ 34,95",
+        "stock": 5,
+        "deal": false
+    },
+    {
+        "name": "Rugzak",
+        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80",
+        "alt": "Rugzak",
+        "category": "Accessoires",
+        "price": "€ 39,95",
+        "stock": 0,
+        "deal": false
+    },
+    {
+        "name": "Koffiezetapparaat",
+        "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=80",
+        "alt": "Koffie en koffiebonen",
+        "category": "Keuken",
+        "price": "€ 79,95",
+        "stock": 12,
+        "deal": false
+    }
+]
