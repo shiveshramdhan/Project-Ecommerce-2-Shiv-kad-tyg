@@ -66,7 +66,7 @@ function createProductCard(product) {
         stockStatus.classList.add("is-out-of-stock");
         stockStatus.textContent = "Uitverkocht";
     } else if (product.stock === 1) {
-        stockStatus.classList.add("is-critical-stock");
+        stockStatus.classList.add("is-last-item");
         stockStatus.textContent = "Laatste exemplaar!";
     } else if (product.stock <= 2) {
         stockStatus.classList.add("is-critical-stock");
