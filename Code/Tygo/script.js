@@ -12,7 +12,6 @@ const flashSaleTitle = document.querySelector("#flash-sale-title");
 const dealProductList = document.querySelector("#deal-products");
 const dealProductsHeading = document.querySelector("#deal-products-heading");
 const otherProductList = document.querySelector("#other-products");
-let dealProducts = [];
 let productsLoaded = false;
 
 const saleDuration = 5 * 60 * 60 * 1000;
@@ -25,13 +24,12 @@ if (!saleEndsAt) {
 }
 
 let cartItems = 0;
-let saleHasExpired = false;
 
 function createProductCard(product) {
     const card = document.createElement("article");
     card.className = product.deal ? "product deal-product" : "product";
     card.dataset.productName = product.name;
-    card.dataset.stock = product.stock;
+    card.dataset.category = product.category;
 
     if (product.deal) {
         const dealLabel = document.createElement("span");
@@ -149,10 +147,10 @@ async function loadProducts() {
             (product.deal ? dealProductList : otherProductList).append(card);
         });
 
-        dealProducts = [...dealProductList.querySelectorAll(".deal-product")];
+        updateCategoryOptions(products);
         productsLoaded = true;
         productStatus.hidden = true;
-        if (saleHasExpired) {
+        if (saleEndsAt <= Date.now()) {
             expireFlashSale();
         }
         filterProducts();
@@ -161,18 +159,16 @@ async function loadProducts() {
         productStatus.textContent = "Producten konden niet worden geladen. Controleer je internetverbinding en probeer het later opnieuw.";
         productStatus.classList.add("is-error");
         productStatus.setAttribute("role", "alert");
-        productStatus.setAttribute("aria-live", "assertive");
     }
 }
 
 function expireFlashSale() {
-    saleHasExpired = true;
     flashSale.classList.add("is-expired");
     flashSaleTitle.textContent = "De flash sale is afgelopen";
     countdownStatus.textContent = "De kortingsprijzen zijn niet meer geldig.";
     countdown.textContent = "00:00:00";
 
-    dealProducts.forEach((product) => {
+    dealProductList.querySelectorAll(".deal-product").forEach((product) => {
         const dealLabel = product.querySelector(".deal-label");
         const price = product.querySelector(".price");
         const regularPrice = price.querySelector("del");
@@ -210,29 +206,18 @@ function getProductCards() {
     return [...document.querySelectorAll(".product")];
 }
 
-function getProductCategory(product) {
-    return product.dataset.category || product.querySelector(".category")?.textContent.trim() || "";
-}
-
-function updateCategoryOptions(productCards) {
-    const selectedCategory = categoryFilter.value;
-    const categories = [...new Set(productCards
-        .map(getProductCategory)
-        .filter(Boolean))]
+function updateCategoryOptions(products) {
+    const categories = [...new Set(products
+        .map((product) => product.category))]
         .sort((first, second) => first.localeCompare(second));
-
-    categoryFilter.replaceChildren(new Option("Alle categorieën", ""));
 
     categories.forEach((category) => {
         categoryFilter.add(new Option(category, category));
     });
-
-    categoryFilter.value = categories.includes(selectedCategory) ? selectedCategory : "";
 }
 
 function filterProducts() {
     const productCards = getProductCards();
-    updateCategoryOptions(productCards);
 
     if (!productsLoaded) {
         noResults.hidden = true;
@@ -244,11 +229,9 @@ function filterProducts() {
     let foundProduct = false;
 
     productCards.forEach((product) => {
-        const productName = product.dataset.productName || product.querySelector("h3")?.textContent || "";
-        const category = getProductCategory(product);
-        const searchableText = `${productName} ${category}`.toLowerCase();
+        const searchableText = `${product.dataset.productName} ${product.dataset.category}`.toLowerCase();
         const matchesSearch = searchableText.includes(searchText);
-        const matchesCategory = !selectedCategory || category.toLowerCase() === selectedCategory;
+        const matchesCategory = !selectedCategory || product.dataset.category.toLowerCase() === selectedCategory;
         const matches = matchesSearch && matchesCategory;
         product.hidden = !matches;
 
@@ -257,7 +240,7 @@ function filterProducts() {
         }
     });
 
-    dealProductsHeading.hidden = !dealProductList.querySelector(".product:not([hidden])");
+    dealProductsHeading.hidden = !dealProductList.querySelector(".deal-product:not([hidden])");
     noResults.hidden = foundProduct;
 }
 
@@ -277,7 +260,7 @@ document.querySelector("#producten").addEventListener("click", (event) => {
     }
 
     const product = button.closest(".product");
-    const productName = product?.dataset.productName || product?.querySelector("h3")?.textContent || "Product";
+    const productName = product.dataset.productName;
 
     cartItems += 1;
     cartCount.textContent = cartItems;
