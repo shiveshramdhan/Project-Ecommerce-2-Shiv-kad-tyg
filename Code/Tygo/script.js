@@ -15,8 +15,8 @@ const otherProductList = document.querySelector("#other-products");
 let dealProducts = [];
 let productsLoaded = false;
 
-const saleDuration = 24 * 60 * 60 * 1000;
-const saleEndStorageKey = "whiteMarketFlashSaleEndsAt";
+const saleDuration = 5 * 60 * 60 * 1000;
+const saleEndStorageKey = "whiteMarketFlashSaleEndsAt5Hours";
 let saleEndsAt = Number(sessionStorage.getItem(saleEndStorageKey));
 
 if (!saleEndsAt) {
