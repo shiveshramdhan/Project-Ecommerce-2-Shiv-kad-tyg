@@ -10,8 +10,10 @@ const countdown = document.querySelector("#countdown");
 const countdownStatus = document.querySelector("#countdown-status");
 const flashSaleTitle = document.querySelector("#flash-sale-title");
 const dealProductList = document.querySelector("#deal-products");
+const dealProductsHeading = document.querySelector("#deal-products-heading");
 const otherProductList = document.querySelector("#other-products");
 let dealProducts = [];
+let productsLoaded = false;
 
 const saleDuration = 24 * 60 * 60 * 1000;
 const saleEndStorageKey = "whiteMarketFlashSaleEndsAt";
@@ -88,27 +90,67 @@ function createProductCard(product) {
     return card;
 }
 
+function formatPrice(price) {
+    return new Intl.NumberFormat("nl-NL", {
+        style: "currency",
+        currency: "EUR"
+    }).format(price);
+}
+
+function mapApiProduct(product) {
+    const image = product.thumbnail || product.images?.[0];
+    if (
+        typeof product.title !== "string" ||
+        typeof product.category !== "string" ||
+        typeof image !== "string" ||
+        !Number.isFinite(product.price) ||
+        product.price < 0 ||
+        !Number.isInteger(product.stock) ||
+        product.stock < 0 ||
+        !Number.isFinite(product.discountPercentage) ||
+        product.discountPercentage < 0 ||
+        product.discountPercentage >= 100
+    ) {
+        throw new Error("De productgegevens van de API hebben een ongeldig formaat.");
+    }
+
+    const isDeal = product.discountPercentage >= 15;
+    const originalPrice = isDeal
+        ? product.price / (1 - product.discountPercentage / 100)
+        : null;
+
+    return {
+        name: product.title,
+        image,
+        alt: product.title,
+        category: product.category,
+        price: formatPrice(product.price),
+        originalPrice: originalPrice === null ? null : formatPrice(originalPrice),
+        stock: product.stock,
+        deal: isDeal
+    };
+}
+
 async function loadProducts() {
     try {
-        const response = await fetch("products.json");
+        const response = await fetch("https://dummyjson.com/products");
         if (!response.ok) {
             throw new Error(`Producten laden mislukt: ${response.status}`);
         }
 
-        const products = await response.json();
-        if (!Array.isArray(products) || products.length < 8) {
-            throw new Error("Het productbestand moet minimaal 8 producten bevatten.");
-        }
-        if (products.some((product) => !Number.isInteger(product.stock) || product.stock < 0)) {
-            throw new Error("Elk product moet een geldig, niet-negatief voorraadaantal hebben.");
+        const data = await response.json();
+        if (!Array.isArray(data.products) || data.products.length < 8) {
+            throw new Error("De API heeft minder dan 8 producten teruggegeven.");
         }
 
+        const products = data.products.map(mapApiProduct);
         products.forEach((product) => {
             const card = createProductCard(product);
             (product.deal ? dealProductList : otherProductList).append(card);
         });
 
         dealProducts = [...dealProductList.querySelectorAll(".deal-product")];
+        productsLoaded = true;
         productStatus.hidden = true;
         if (saleHasExpired) {
             expireFlashSale();
@@ -116,7 +158,10 @@ async function loadProducts() {
         filterProducts();
     } catch (error) {
         console.error(error);
-        productStatus.textContent = "Producten konden niet worden geladen. Probeer het later opnieuw.";
+        productStatus.textContent = "Producten konden niet worden geladen. Controleer je internetverbinding en probeer het later opnieuw.";
+        productStatus.classList.add("is-error");
+        productStatus.setAttribute("role", "alert");
+        productStatus.setAttribute("aria-live", "assertive");
     }
 }
 
@@ -189,6 +234,11 @@ function filterProducts() {
     const productCards = getProductCards();
     updateCategoryOptions(productCards);
 
+    if (!productsLoaded) {
+        noResults.hidden = true;
+        return;
+    }
+
     const searchText = searchInput.value.trim().toLowerCase();
     const selectedCategory = categoryFilter.value.toLowerCase();
     let foundProduct = false;
@@ -207,6 +257,7 @@ function filterProducts() {
         }
     });
 
+    dealProductsHeading.hidden = !dealProductList.querySelector(".product:not([hidden])");
     noResults.hidden = foundProduct;
 }
 

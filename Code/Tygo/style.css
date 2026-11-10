@@ -388,6 +388,15 @@ a:focus-visible {
     font-weight: 700;
 }
 
+#product-status.is-error {
+    padding: 12px 16px;
+    background: #fde2df;
+    border: 1px solid #8c241b;
+    border-radius: 8px;
+    color: #8c241b;
+    font-weight: 700;
+}
+
 footer {
     padding: 20px;
     background: var(--text);
