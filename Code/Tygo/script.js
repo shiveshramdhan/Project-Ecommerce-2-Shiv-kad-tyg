@@ -4,6 +4,7 @@ const categoryFilter = document.querySelector("#category-filter");
 const noResults = document.querySelector("#no-results");
 const productStatus = document.querySelector("#product-status");
 const cartCount = document.querySelector("#cart-count");
+const favoritesToggle = document.querySelector("#favorites-toggle");
 const message = document.querySelector("#message");
 const flashSale = document.querySelector("#flash-sale");
 const countdown = document.querySelector("#countdown");
@@ -12,10 +13,13 @@ const flashSaleTitle = document.querySelector("#flash-sale-title");
 const dealProductList = document.querySelector("#deal-products");
 const dealProductsHeading = document.querySelector("#deal-products-heading");
 const otherProductList = document.querySelector("#other-products");
+const otherProductsHeading = document.querySelector("#other-products-heading");
 let productsLoaded = false;
+let favoritesOnly = false;
 
 const saleDuration = 5 * 60 * 60 * 1000;
 const saleEndStorageKey = "whiteMarketFlashSaleEndsAt5Hours";
+const favoriteStorageKey = "whiteMarketFavorites";
 let saleEndsAt = Number(sessionStorage.getItem(saleEndStorageKey));
 
 if (!saleEndsAt) {
@@ -24,11 +28,49 @@ if (!saleEndsAt) {
 }
 
 let cartItems = 0;
+let favoriteProductIds = loadFavoriteProductIds();
+updateFavoritesToggle();
+
+function loadFavoriteProductIds() {
+    try {
+        const storedFavorites = localStorage.getItem(favoriteStorageKey);
+        if (storedFavorites === null) {
+            return new Set();
+        }
+
+        const parsedFavorites = JSON.parse(storedFavorites);
+        if (!Array.isArray(parsedFavorites) || parsedFavorites.some((id) => typeof id !== "string")) {
+            throw new Error("De opgeslagen favorieten hebben een ongeldig formaat.");
+        }
+
+        return new Set(parsedFavorites);
+    } catch (error) {
+        console.error("Favorieten konden niet worden geladen.", error);
+        message.textContent = "Je favorieten konden niet worden geladen.";
+        return new Set();
+    }
+}
+
+function updateFavoriteButton(card, button, productId) {
+    const isFavorite = favoriteProductIds.has(productId);
+    card.classList.toggle("is-favorite", isFavorite);
+    button.classList.toggle("is-favorite", isFavorite);
+    button.setAttribute("aria-pressed", String(isFavorite));
+    button.setAttribute("aria-label", isFavorite ? "Verwijder uit favorieten" : "Voeg toe aan favorieten");
+    button.textContent = isFavorite ? "♥ Favoriet" : "♡ Favoriet";
+}
+
+function updateFavoritesToggle() {
+    favoritesToggle.textContent = `Favorieten (${favoriteProductIds.size})`;
+    favoritesToggle.setAttribute("aria-pressed", String(favoritesOnly));
+    favoritesToggle.classList.toggle("is-active", favoritesOnly);
+}
 
 function createProductCard(product) {
     const card = document.createElement("article");
     card.className = product.deal ? "product deal-product" : "product";
     card.dataset.productName = product.name;
+    card.dataset.productId = product.id;
     card.dataset.category = product.category;
 
     if (product.deal) {
@@ -84,7 +126,12 @@ function createProductCard(product) {
     addButton.textContent = "In winkelwagen";
     addButton.disabled = product.stock === 0;
 
-    card.append(image, category, name, price, stockStatus, addButton);
+    const favoriteButton = document.createElement("button");
+    favoriteButton.className = "favorite-button";
+    favoriteButton.type = "button";
+    updateFavoriteButton(card, favoriteButton, product.id);
+
+    card.append(image, category, name, price, stockStatus, favoriteButton, addButton);
     return card;
 }
 
@@ -98,6 +145,8 @@ function formatPrice(price) {
 function mapApiProduct(product) {
     const image = product.thumbnail || product.images?.[0];
     if (
+        !Number.isInteger(product.id) ||
+        product.id <= 0 ||
         typeof product.title !== "string" ||
         typeof product.category !== "string" ||
         typeof image !== "string" ||
@@ -118,6 +167,7 @@ function mapApiProduct(product) {
         : null;
 
     return {
+        id: String(product.id),
         name: product.title,
         image,
         alt: product.title,
@@ -232,7 +282,8 @@ function filterProducts() {
         const searchableText = `${product.dataset.productName} ${product.dataset.category}`.toLowerCase();
         const matchesSearch = searchableText.includes(searchText);
         const matchesCategory = !selectedCategory || product.dataset.category.toLowerCase() === selectedCategory;
-        const matches = matchesSearch && matchesCategory;
+        const matchesFavorite = !favoritesOnly || favoriteProductIds.has(product.dataset.productId);
+        const matches = matchesSearch && matchesCategory && matchesFavorite;
         product.hidden = !matches;
 
         if (matches) {
@@ -241,8 +292,18 @@ function filterProducts() {
     });
 
     dealProductsHeading.hidden = !dealProductList.querySelector(".deal-product:not([hidden])");
+    otherProductsHeading.hidden = !otherProductList.querySelector(".product:not([hidden])");
+    noResults.textContent = favoritesOnly
+        ? "Geen favoriete producten gevonden."
+        : "Geen producten gevonden.";
     noResults.hidden = foundProduct;
 }
+
+favoritesToggle.addEventListener("click", () => {
+    favoritesOnly = !favoritesOnly;
+    updateFavoritesToggle();
+    filterProducts();
+});
 
 searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -254,13 +315,42 @@ categoryFilter.addEventListener("change", filterProducts);
 filterProducts();
 
 document.querySelector("#producten").addEventListener("click", (event) => {
-    const button = event.target.closest(".add-button");
+    const button = event.target.closest("button");
     if (!button) {
         return;
     }
 
     const product = button.closest(".product");
     const productName = product.dataset.productName;
+
+    if (button.classList.contains("favorite-button")) {
+        const productId = product.dataset.productId;
+        const updatedFavorites = new Set(favoriteProductIds);
+        if (updatedFavorites.has(productId)) {
+            updatedFavorites.delete(productId);
+        } else {
+            updatedFavorites.add(productId);
+        }
+
+        try {
+            localStorage.setItem(favoriteStorageKey, JSON.stringify([...updatedFavorites]));
+            favoriteProductIds = updatedFavorites;
+            updateFavoriteButton(product, button, productId);
+            updateFavoritesToggle();
+            filterProducts();
+            message.textContent = favoriteProductIds.has(productId)
+                ? `${productName} toegevoegd aan je favorieten.`
+                : `${productName} verwijderd uit je favorieten.`;
+        } catch (error) {
+            console.error("Favorieten konden niet worden opgeslagen.", error);
+            message.textContent = "Je favorieten konden niet worden opgeslagen.";
+        }
+        return;
+    }
+
+    if (!button.classList.contains("add-button")) {
+        return;
+    }
 
     cartItems += 1;
     cartCount.textContent = cartItems;

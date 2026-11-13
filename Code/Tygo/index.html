@@ -18,7 +18,10 @@
                 <button type="submit">Zoeken</button>
             </form>
 
-            <p class="cart">Winkelwagen: <span id="cart-count" aria-live="polite">0</span></p>
+            <div class="header-actions">
+                <p class="cart">Winkelwagen: <span id="cart-count" aria-live="polite">0</span></p>
+                <button id="favorites-toggle" class="favorites-toggle" type="button" aria-pressed="false">Favorieten (0)</button>
+            </div>
         </div>
     </header>
 
@@ -51,7 +54,7 @@
             <h2 id="deal-products-heading">Aanbiedingen</h2>
             <div class="product-list" id="deal-products"></div>
 
-            <h2>Meer producten</h2>
+            <h2 id="other-products-heading">Meer producten</h2>
             <div class="product-list" id="other-products"></div>
 
             <p id="product-status" role="status">Producten laden...</p>
