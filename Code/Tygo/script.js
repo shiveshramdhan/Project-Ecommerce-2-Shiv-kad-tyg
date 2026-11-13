@@ -3,6 +3,8 @@ const searchForm = document.querySelector("#search-form");
 const categoryFilter = document.querySelector("#category-filter");
 const noResults = document.querySelector("#no-results");
 const productStatus = document.querySelector("#product-status");
+const productStatusText = document.querySelector("#product-status-text");
+const loadingSpinner = document.querySelector(".loading-spinner");
 const cartCount = document.querySelector("#cart-count");
 const favoritesToggle = document.querySelector("#favorites-toggle");
 const message = document.querySelector("#message");
@@ -206,7 +208,8 @@ async function loadProducts() {
         filterProducts();
     } catch (error) {
         console.error(error);
-        productStatus.textContent = "Producten konden niet worden geladen. Controleer je internetverbinding en probeer het later opnieuw.";
+        loadingSpinner.hidden = true;
+        productStatusText.textContent = "Producten konden niet worden geladen. Controleer je internetverbinding en probeer het later opnieuw.";
         productStatus.classList.add("is-error");
         productStatus.setAttribute("role", "alert");
     }

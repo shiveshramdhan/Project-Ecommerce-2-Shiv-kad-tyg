@@ -51,15 +51,25 @@
                 </select>
             </div>
 
+            <p id="product-status" class="product-status" role="status" aria-live="polite">
+                <span class="loading-spinner" aria-hidden="true"></span>
+                <span id="product-status-text">Producten worden geladen...</span>
+            </p>
+
             <h2 id="deal-products-heading">Aanbiedingen</h2>
             <div class="product-list" id="deal-products"></div>
 
             <h2 id="other-products-heading">Meer producten</h2>
             <div class="product-list" id="other-products"></div>
 
+<<<<<<< Updated upstream
             <p id="product-status" role="status">Producten laden...</p>
             <p id="no-results" role="status" hidden>Geen producten gevonden.</p>
             <p id="message" role="status"></p>
+=======
+            <p id="no-results" role="status" aria-live="polite" hidden>Geen producten gevonden.</p>
+            <p id="message" role="status" aria-live="polite"></p>
+>>>>>>> Stashed changes
         </section>
     </main>
 
